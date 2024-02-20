@@ -471,6 +471,51 @@
     }
   },
   {
+    "type": "console.catalog/item-type",
+    "properties": {
+      "type": "Events",
+      "title": "%knative-plugin~Events%",
+      "catalogDescription": "%knative-plugin~​​Events available that can be consumed with Serverless Functions or regular Deployments.%",
+      "typeDescription": "%knative-plugin~​​**Events** available that can be consumed with Serverless Functions or regular Deployments.%",
+      "filters": [
+        {
+          "label": "%knative-plugin~Provider%",
+          "attribute": "provider"
+        }
+      ]
+    },
+    "flags": {
+      "required": ["KNATIVE_EVENTING"]
+    }
+  },
+  {
+    "type": "console.navigation/href",
+    "properties": {
+      "id": "eventing-events-catalog",
+      "perspective": "dev",
+      "section": "resources",
+      "name": "%knative-plugin~Events Catalog%",
+      "href": "/catalog/all-namespaces?catalogType=Events",
+      "namespaced": true,
+      "insertAfter": "functions"
+    },
+    "flags": {
+      "required": ["KNATIVE_EVENTING"]
+    }
+  },
+  {
+    "type": "console.catalog/item-provider",
+    "properties": {
+      "catalogId": "dev-catalog",
+      "type": "Events",
+      "title": "%knative-plugin~Events%",
+      "provider": { "$codeRef": "catalog.eventTypeProvider" }
+    },
+    "flags": {
+      "required": ["KNATIVE_EVENTING"]
+    }
+  },
+  {
     "type": "console.page/route",
     "properties": {
       "exact": false,
