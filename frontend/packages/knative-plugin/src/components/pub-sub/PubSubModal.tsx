@@ -44,8 +44,8 @@ const PubSubModal: React.FC<Props> = ({
             label={t('knative-plugin~Name')}
             required
           />
-          <PubSubSubscriber />
           {filterEnabled && <PubSubFilter />}
+          <PubSubSubscriber />
         </FormSection>
       </ModalBody>
       <ModalSubmitFooter

@@ -361,6 +361,19 @@
     "type": "console.page/route",
     "properties": {
       "exact": true,
+      "path": ["/catalog/ns/:ns/subscribe"],
+      "component": {
+        "$codeRef": "addComponent.SubscribePage"
+      }
+    },
+    "flags": {
+      "required": ["KNATIVE_EVENTING"]
+    }
+  },
+  {
+    "type": "console.page/route",
+    "properties": {
+      "exact": true,
       "path": ["/channel"],
       "component": {
         "$codeRef": "knativeComponent.NamespaceRedirect"
@@ -440,11 +453,10 @@
     "properties": {
       "id": "functions",
       "perspective": "dev",
-      "section": "resources",
+      "section": "serverless",
       "name": "%knative-plugin~Functions%",
       "href": "/functions",
       "namespaced": true,
-      "insertBefore": "builds",
       "dataAttributes": {
         "data-quickstart-id": "qs-nav-functions",
         "data-test-id": "functions-details-header"
@@ -483,21 +495,6 @@
           "attribute": "provider"
         }
       ]
-    },
-    "flags": {
-      "required": ["KNATIVE_EVENTING"]
-    }
-  },
-  {
-    "type": "console.navigation/href",
-    "properties": {
-      "id": "eventing-events-catalog",
-      "perspective": "dev",
-      "section": "resources",
-      "name": "%knative-plugin~Events Catalog%",
-      "href": "/catalog/all-namespaces?catalogType=Events",
-      "namespaced": true,
-      "insertAfter": "functions"
     },
     "flags": {
       "required": ["KNATIVE_EVENTING"]
@@ -806,7 +803,7 @@
     "type": "console.navigation/href",
     "properties": {
       "id": "serverlessserving",
-      "perspective": "admin",
+      "perspective": "dev",
       "section": "serverless",
       "name": "%knative-plugin~Serving%",
       "href": "/serving",
@@ -820,7 +817,7 @@
     "type": "console.navigation/href",
     "properties": {
       "id": "serverlesseventing",
-      "perspective": "admin",
+      "perspective": "dev",
       "section": "serverless",
       "name": "%knative-plugin~Eventing%",
       "href": "/eventing",
@@ -1942,12 +1939,11 @@
   {
     "type": "console.navigation/section",
     "properties": {
-      "perspective": "admin",
+      "perspective": "dev",
       "id": "serverless",
       "name": "%knative-plugin~Serverless%",
       "dataAttributes": { "data-quickstart-id": "qs-nav-serverless" },
-      "insertBefore": "networking",
-      "insertAfter": "virtualization"
+      "insertBefore": "resources"
     },
     "flags": {
       "required": ["KNATIVE_SERVING", "KNATIVE_EVENTING"]

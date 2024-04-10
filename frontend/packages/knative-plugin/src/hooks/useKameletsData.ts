@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useK8sWatchResources } from '@console/internal/components/utils/k8s-watch-hook';
 import { K8sResourceKind, referenceForModel } from '@console/internal/module/k8s';
-import { CAMEL_K_OPERATOR_NS, GLOBAL_OPERATOR_NS } from '../const';
+import { CAMEL_K_OPERATOR_NS, CAMEL_K_REDHAT_OPERATOR_NS, GLOBAL_OPERATOR_NS } from '../const';
 import { CamelKameletModel } from '../models';
 
 export const useKameletsData = (namespace: string): [K8sResourceKind[], boolean, any] => {
@@ -29,6 +29,12 @@ export const useKameletsData = (namespace: string): [K8sResourceKind[], boolean,
         namespace: CAMEL_K_OPERATOR_NS,
         optional: true,
       },
+      kameletsGlobalNs3: {
+        isList: true,
+        kind: referenceForModel(CamelKameletModel),
+        namespace: CAMEL_K_REDHAT_OPERATOR_NS,
+        optional: true,
+      },
     }),
     [namespace],
   );
@@ -42,19 +48,34 @@ export const useKameletsData = (namespace: string): [K8sResourceKind[], boolean,
     const resDataloadError = Object.keys(extraResources).every(
       (key) => extraResources[key].loadError,
     );
-    const { kamelets: kameletsData, kameletsGlobalNs, kameletsGlobalNs2 } = extraResources;
+    const {
+      kamelets: kameletsData,
+      kameletsGlobalNs,
+      kameletsGlobalNs2,
+      kameletsGlobalNs3,
+    } = extraResources;
     if (resDataLoaded) {
       if (kameletsData.data.length > 0) {
         setKamelets(kameletsData.data);
       } else if (kameletsGlobalNs.data.length > 0) {
         setKamelets(kameletsGlobalNs.data);
-      } else {
+      } else if (kameletsGlobalNs2.data.length > 0) {
         setKamelets(kameletsGlobalNs2.data);
+      } else {
+        setKamelets(kameletsGlobalNs3.data);
       }
-      setKameletsLoaded(kameletsData.loaded || kameletsGlobalNs.loaded || kameletsGlobalNs2.loaded);
+      setKameletsLoaded(
+        kameletsData.loaded ||
+          kameletsGlobalNs.loaded ||
+          kameletsGlobalNs2.loaded ||
+          kameletsGlobalNs3.loaded,
+      );
     } else if (resDataloadError) {
       setKameletsLoadError(
-        kameletsGlobalNs.loadError || kameletsGlobalNs.loadError || kameletsGlobalNs2.loadError,
+        kameletsGlobalNs.loadError ||
+          kameletsGlobalNs.loadError ||
+          kameletsGlobalNs2.loadError ||
+          kameletsGlobalNs3.loadError,
       );
     }
   }, [extraResources]);

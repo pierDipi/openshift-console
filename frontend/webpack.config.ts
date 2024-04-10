@@ -108,6 +108,9 @@ const config: Configuration = {
     crypto: 'empty',
     module: 'empty',
   },
+  watchOptions: {
+    ignored: ['**/node_modules/**'],
+  },
   module: {
     rules: [
       {
